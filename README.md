@@ -1,16 +1,17 @@
-# azurerm-linux-virtual-machine
+# Linux VM Module
 
-This module creates a reusable **Azure Linux Virtual Machine** with supporting resources such as:
+This module creates an Azure Linux Virtual Machine using the `azurerm` provider.
 
-- Resource group
-- Virtual network
-- Network interface
-- OS disk
-- SSH access
-- Cloud-init custom data
-- Tags
+It is designed to be consumed via the root module
+`rvishnuprasath/linux-vm-public/azurerm`.
 
-> This module is **top-level** and can be used directly in Terraform Public Registry.
+## Usage
 
----
+```hcl
+module "linux_vm" {
+  source = "rvishnuprasath/linux-vm-public/azurerm//modules/linux-vm"
 
+  resource_group_name = "rg-example"
+  location            = "centralindia"
+  vm_name             = "vm-example"
+}

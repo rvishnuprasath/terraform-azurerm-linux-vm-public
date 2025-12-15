@@ -9,7 +9,7 @@ resource "azurerm_linux_virtual_machine" "mylinuxvm" {
   network_interface_ids = [azurerm_network_interface.mynic.id]
   admin_ssh_key {
     username   = var.vm_info.ssh_key_username # "azuser"
-    public_key = file("${path.module}/ssh-key/terraform-azure.pub") # public Key Location
+    public_key = var.ssh_public_key # file("${path.module}/ssh-key/terraform-azure.pub") # public Key Location
   }
   os_disk {
     name                 = "${local.vm_name}-${var.vm_info.os_disk_name}"
@@ -23,7 +23,7 @@ resource "azurerm_linux_virtual_machine" "mylinuxvm" {
     sku       = var.vm_info.os_image_sku # "server"
     version   = var.vm_info.os_image_version # "latest"
   }
-  custom_data = filebase64("${path.module}/app-script/custom-data-app1-ubuntu-cloud-init.txt")
+  custom_data = var.custom_data # filebase64("${path.module}/app-script/custom-data-app1-ubuntu-cloud-init.txt")
   tags        = var.common_tags
 }
 

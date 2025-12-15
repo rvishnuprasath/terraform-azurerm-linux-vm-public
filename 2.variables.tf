@@ -30,7 +30,6 @@ variable "virtual_network_config" {
     nic_name = string
     nic_private_ip_allocation = string
     nic_ip_config_name = string
-    #nic_sub_id = string
   })
 }
 
@@ -42,7 +41,6 @@ variable "vm_info" {
     sku_size = string
     admin_username = string
     ssh_key_username = string
-    #ssh_publickey_path = string
     os_disk_name = string
     os_disk_size_gb = number
     os_disk_type = string
@@ -51,8 +49,17 @@ variable "vm_info" {
     os_image_offer     = string
     os_image_sku       = string
     os_image_version   = string
-    #custom_data_path = string
   })  
+}
+variable "ssh_public_key" {
+  description = "SSH public key for the Linux VM"
+  type        = string
+}
+
+variable "custom_data" {
+  description = "Base64-encoded cloud-init custom data"
+  type        = string
+  default     = null
 }
 
 variable "common_tags" {

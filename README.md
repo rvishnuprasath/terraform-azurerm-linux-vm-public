@@ -1,8 +1,10 @@
 # Azure Linux Virtual Machine – Terraform Module
 
-**Provider:** `azurerm`
-**Author:** Vishnuprasath R
-**Source (GitHub):** [terraform-azurerm-linux-vm-public](https://github.com/rvishnuprasath/terraform-azurerm-linux-vm-public)
+# Azure Linux Virtual Machine – Terraform Module
+
+**Provider:** `azurerm`  
+**Author:** Vishnuprasath R  
+**Source (GitHub):** [terraform-azurerm-linux-vm-public](https://github.com/rvishnuprasath/terraform-azurerm-linux-vm-public)  
 **Terraform Registry:** [rvishnuprasath/linux-vm-public/azurerm](https://registry.terraform.io/modules/rvishnuprasath/linux-vm-public/azurerm)
 
 ---

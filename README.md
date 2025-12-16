@@ -1,15 +1,15 @@
 # Azure Linux Virtual Machine – Terraform Module
 
-**Provider:** azurerm  
-**Author:** Vishnuprasath R  
-**Source:** https://github.com/rvishnuprasath/terraform-azurerm-linux-vm-public  
-**Terraform Registry:** https://registry.terraform.io/modules/rvishnuprasath/linux-vm-public/azurerm  
+**Provider:** `azurerm`
+**Author:** Vishnuprasath R
+**Source (GitHub):** [terraform-azurerm-linux-vm-public](https://github.com/rvishnuprasath/terraform-azurerm-linux-vm-public)
+**Terraform Registry:** [rvishnuprasath/linux-vm-public/azurerm](https://registry.terraform.io/modules/rvishnuprasath/linux-vm-public/azurerm)
 
 ---
 
 ## Overview
 
-This Terraform module provides a **composable and reusable way to deploy Azure Linux Virtual Machines** using the `azurerm` provider.
+This Terraform module provides a composable and reusable way to deploy **Azure Linux Virtual Machines** using the `azurerm` provider.
 
 This repository follows the **Terraform recommended composite module pattern**.
 
@@ -17,29 +17,31 @@ This repository follows the **Terraform recommended composite module pattern**.
 
 ## Module Structure
 
-This repository contains:
+* **Root module** – Documentation and module entry point
+* **Submodule** – `modules/linux-vm`
 
-- **Root module** – Documentation and module entry point
-- **Submodule**
-  - `modules/linux-vm` – Creates an Azure Linux Virtual Machine and required networking resources
+  * Creates an Azure Linux VM
+  * Configures networking: VNET, Subnets, NIC, NSG, Public IP
 
-> ⚠️ **Important**  
-> The root module does **not** create resources directly.  
-> Always reference the **submodule** when using this module.
+⚠️ **Important:**
+The root module does **not** create resources directly. Always reference the **submodule** when using this module.
 
 ---
 
 ## Usage
 
-```hcl
-module "linux_vm" {
-  source  = "rvishnuprasath/linux-vm-public/azurerm//modules/linux-vm"
-  version = "1.0.1"
+### Example: Using the module from Terraform Registry
 
-  bs_unit_env = {
-    bs_unit = "finance"
-    env     = "dev"
-  }
+```hcl
+provider "azurerm" {
+  features {}
+}
+
+module "linux_vm" {
+  source  = "rvishnuprasath/linux-vm-public/azurerm"
+  version = "1.0.4"
+
+  bs_unit_env = { bs_unit = "finance", env = "dev" }
 
   resoure_group_config = {
     rg_name     = "rg-dev-linuxvm"
@@ -47,16 +49,13 @@ module "linux_vm" {
   }
 
   virtual_network_config = {
-    vnet_name          = "vnet-dev"
-    vnet_address_spcae = ["10.0.0.0/16"]
-    subnets            = { default = "10.0.1.0/24" }
-
+    vnet_name                = "vnet-dev"
+    vnet_address_space       = ["10.0.0.0/16"]
+    subnets                   = { default = "10.0.1.0/24" }
     pu_ip_name                = "pip-dev"
     pu_ip_allocation_method   = "Static"
     pu_ip_domain_label        = "linuxvm-dev"
-
     nsg_name                  = "nsg-dev"
-
     nic_name                  = "nic-dev"
     nic_private_ip_allocation = "Dynamic"
     nic_ip_config_name        = "ipconfig1"
@@ -80,13 +79,22 @@ module "linux_vm" {
 
   ssh_public_key = file("~/.ssh/id_rsa.pub")
 
-  common_tags = {
+  common_tags = { 
     environment = "dev"
     owner       = "platform-team"
   }
 }
 
+output "vm_public_ip" {
+  value = module.linux_vm.vm_public_ip_address
+}
+```
 
-Requirements:
-Terraform >= 1.9
-azurerm provider >= 4.0
+---
+
+## Requirements
+
+* Terraform `>= 1.9`
+* `azurerm` provider `>= 4.0`
+
+---

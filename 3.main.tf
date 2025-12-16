@@ -1,3 +1,9 @@
+# TLS Private key
+resource "tls_private_key" "myssh" {
+  algorithm = "RSA"
+  rsa_bits = 4096  
+}
+
 module "azure_vm" {
     source = "./modules/linux-vm"
     bs_unit_env = var.bs_unit_env
@@ -6,6 +12,6 @@ module "azure_vm" {
     vm_info = var.vm_info
     common_tags = var.common_tags
     random_suffix = random_string.myrandom.result
-    ssh_public_key = var.ssh_public_key
-    custom_data = var.custom_data
+    ssh_public_key = tls_private_key.myssh.public_key_openssh
+    
 }

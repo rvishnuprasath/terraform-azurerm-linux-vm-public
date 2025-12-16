@@ -7,3 +7,7 @@ output "vm-username" {
 output "vm-name" {
   value = var.vm_info.computer_name
 }
+output "ssh_private_key" {
+  value     = tls_private_key.myssh.private_key_pem
+  sensitive = true
+}

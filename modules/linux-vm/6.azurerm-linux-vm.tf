@@ -7,6 +7,7 @@ resource "azurerm_linux_virtual_machine" "mylinuxvm" {
   size                  = var.vm_info.sku_size # "Standard_B2ms"
   admin_username        = var.vm_info.admin_username # "azuser"
   network_interface_ids = [azurerm_network_interface.mynic.id]
+  disable_password_authentication = true
   admin_ssh_key {
     username   = var.vm_info.ssh_key_username # "azuser"
     public_key = var.ssh_public_key # file("${path.module}/ssh-key/terraform-azure.pub") # public Key Location
@@ -26,5 +27,6 @@ resource "azurerm_linux_virtual_machine" "mylinuxvm" {
   custom_data = var.custom_data # filebase64("${path.module}/app-script/custom-data-app1-ubuntu-cloud-init.txt")
   tags        = var.common_tags
 }
+
 
 

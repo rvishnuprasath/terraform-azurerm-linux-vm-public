@@ -51,10 +51,12 @@ variable "vm_info" {
     os_image_version   = string
   })  
 }
+
 variable "ssh_public_key" {
-  description = "SSH public key for the Linux VM"
+  description = "SSH public key for Linux VM"
   type        = string
 }
+
 
 variable "custom_data" {
   description = "Base64-encoded cloud-init custom data"

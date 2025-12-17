@@ -77,7 +77,3 @@ variable "custom_data" {
   default     = null
 }
 
-# submodule → REMOVE random_string
-variable "random_suffix" {
-  type = string
-}

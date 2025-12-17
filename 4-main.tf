@@ -16,7 +16,7 @@ resource "tls_private_key" "myssh" {
 }
 
 module "azure_vm" {
-    source = "./modules/vnet"
+    source = "./modules/linux_vm_network"
     
     bs_unit_env = var.bs_unit_env
     resoure_group_config = var.resoure_group_config

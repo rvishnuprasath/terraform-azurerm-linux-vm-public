@@ -1,11 +1,3 @@
-# Random String Resource
-resource "random_string" "myrandom" {
-  length  = 6
-  upper   = false
-  special = false
-  numeric = false
-}
-
 resource "azurerm_resource_group" "myrg" {
   name     = local.rg_name
   location = var.resoure_group_config.rg_location
@@ -41,7 +33,8 @@ resource "azurerm_public_ip" "myip" {
   resource_group_name = azurerm_resource_group.myrg.name
   location            = azurerm_resource_group.myrg.location
   allocation_method   =  var.virtual_network_config.pu_ip_allocation_method
-  domain_name_label   = lower("${var.virtual_network_config.pu_ip_domain_label}-${random_string.myrandom.result}") 
+  #domain_name_label   = lower("${var.virtual_network_config.pu_ip_domain_label}-${random_string.myrandom.result}") 
+  domain_name_label    = lower("${var.virtual_network_config.pu_ip_domain_label}-${var.random_suffix}")
   tags                = var.common_tags
 }
 

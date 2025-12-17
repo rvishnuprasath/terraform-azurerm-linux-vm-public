@@ -1,3 +1,4 @@
+# Generate code (Ctrl+I), or select a language (Ctrl+K M).
 terraform {
   required_version = ">= 1.13.3"
   required_providers {
@@ -13,9 +14,14 @@ terraform {
       source  = "hashicorp/null"
       version = ">= 3.2.4"
     }
-    time = {
-      source  = "hashicorp/time"
-      version = ">= 0.13.1"
-    }
   }
 }
+
+# Random String Resource
+resource "random_string" "myrandom" {
+  length  = 6
+  upper   = false
+  special = false
+  numeric = false
+}
+

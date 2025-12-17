@@ -1,9 +1,3 @@
-resource "azurerm_resource_group" "myrg" {
-  name     = local.rg_name
-  location = var.resoure_group_config.rg_location
-  tags = var.common_tags
-}
-
 # Resource for VNET Creation
 resource "azurerm_virtual_network" "myvnet" {
   name                = local.virtual_network_name
@@ -33,8 +27,7 @@ resource "azurerm_public_ip" "myip" {
   resource_group_name = azurerm_resource_group.myrg.name
   location            = azurerm_resource_group.myrg.location
   allocation_method   =  var.virtual_network_config.pu_ip_allocation_method
-  #domain_name_label   = lower("${var.virtual_network_config.pu_ip_domain_label}-${random_string.myrandom.result}") 
-  domain_name_label    = lower("${var.virtual_network_config.pu_ip_domain_label}-${var.random_suffix}")
+  domain_name_label   = lower("${var.virtual_network_config.pu_ip_domain_label}-${random_string.myrandom.result}") 
   tags                = var.common_tags
 }
 
@@ -46,7 +39,7 @@ resource "azurerm_network_interface" "mynic" {
 
   ip_configuration {
     name                          = var.virtual_network_config.nic_ip_config_name
-    subnet_id                     = azurerm_subnet.mysubnet["sub-web"].id
+    subnet_id                     = azurerm_subnet.mysubnet[0].id
     private_ip_address_allocation = var.virtual_network_config.nic_private_ip_allocation
     public_ip_address_id          = azurerm_public_ip.myip.id
   }
@@ -91,4 +84,3 @@ resource "azurerm_network_interface_security_group_association" "nsg-association
   network_interface_id      = azurerm_network_interface.mynic.id
   network_security_group_id = azurerm_network_security_group.mynsg.id
 }
-

@@ -1,6 +1,6 @@
 # Resource Naming 
 locals {
-  rg_name                   = "${var.bs_unit_env.bs_unit}-${var.bs_unit_env.env}-${terraform.workspace}-${var.resoure_group_config.rg_name}"
+  rg_name                   = "${var.bs_unit_env.bs_unit}-${var.bs_unit_env.env}-${terraform.workspace}-${var.resource_group_config.rg_name}"
   vm_name                   = "${var.bs_unit_env.bs_unit}-${var.bs_unit_env.env}-${terraform.workspace}-${var.vm_info.az_vm_name}"
   virtual_network_name      = "${var.bs_unit_env.bs_unit}-${var.bs_unit_env.env}-${terraform.workspace}-${var.virtual_network_config.vnet_name}"
   network_interface_name    = "${var.bs_unit_env.bs_unit}-${var.bs_unit_env.env}-${terraform.workspace}-${var.virtual_network_config.nic_name}"

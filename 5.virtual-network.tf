@@ -39,7 +39,7 @@ resource "azurerm_network_interface" "mynic" {
 
   ip_configuration {
     name                          = var.virtual_network_config.nic_ip_config_name
-    subnet_id                     = azurerm_subnet.mysubnet[0].id
+    subnet_id                     = azurerm_subnet.mysubnet["sub-web"].id
     private_ip_address_allocation = var.virtual_network_config.nic_private_ip_allocation
     public_ip_address_id          = azurerm_public_ip.myip.id
   }

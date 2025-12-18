@@ -1,65 +1,78 @@
+
+
 # Bussiness & ENV Details
 variable "bs_unit_env" {
-  type = ooptional(bject({
-    bs_unit = optional(string)
-    env = optional(string)
-  })) 
+  type = object({
+    bs_unit = "qu"
+    env = "sit"
+  }) 
 }
 
 # RG Info
 variable "resoure_group_config" {
-  type = optional(object({
-    rg_name = optional(string)
-    rg_location = optional(string)
-  }))  
+  type = object({
+    rg_name = "rg1"
+    rg_location = "Central India"
+  })  
 }
 
 # VNET Info
 variable "virtual_network_config" {
-  type = optional(object({
-    vnet_name = optional(string)
-    vnet_address_space = optional(list(string))
-    subnets = optional(map(string))
-    
-    pu_ip_name = optional(string)
-    pu_ip_allocation_method = optional(string)
-    pu_ip_domain_label  = optional(string)
-    
-    nsg_name = optional(string)
-
-    nic_name = optional(string)
-    nic_private_ip_allocation = optional(string)
-    nic_ip_config_name = optional(string)
-  }))
+  type = object({
+    vnet_name = "vnet"
+    vnet_address_space = [ "10.0.0.0/16", "10.1.0.0/16" ]
+    subnets = {
+    "sub-web" = "10.0.1.0/24"
+    "sub-app" = "10.0.2.0/24"
+    "sub-odb" = "10.0.3.0/24"
+    "new-sub" = "10.1.1.0/24"
+  }
+  nic_name = "vm-nic"
+  nic_private_ip_allocation = "Dynamic"
+  nsg_name = "vm-nsg"
+  nic_ip_config_name = "Internal"
+  
+  pu_ip_name = "vm-pu-ip"
+  pu_ip_allocation_method = "Static"
+  pu_ip_domain_label = "app1"  
+  
+  })
 }
 
 # VM Info
 variable "vm_info" {
-  type = optional(object({
-    az_vm_name = optional(string)
-    computer_name = optional(string)
-    sku_size = optional(string)
-    admin_username = optional(string)
-    ssh_key_username = optional(string)
-    os_disk_name = optional(string)
-    os_disk_size_gb = optional(number)
-    os_disk_type = optional(string)
-    os_disk_cache      = optional(string)
-    os_image_publisher = optional(string)
-    os_image_offer     = optional(string)
-    os_image_sku       = optional(string)
-    os_image_version   = optional(string)
-  }))  
+  type = object({
+    az_vm_name = "vm-app"
+    computer_name = "vm-app"
+    admin_username = "azuser"  
+    ssh_key_username = "azuser"
+    sku_size = "Standard_B2ms"
+    os_disk_name = "os-disk"
+    os_disk_cache = "ReadWrite"
+    os_disk_size_gb = 64
+    os_disk_type = "Standard_LRS"
+    os_image_offer = "ubuntu-24_04-lts"
+    os_image_publisher = "canonical"
+    os_image_sku = "server"
+    os_image_version = "latest"
+    
+  })  
 }
 
+variable "ssh_public_key" {
+  description = "SSH public key for Linux VM"
+  type        = string
+}
 variable "custom_data" {
   description = "Base64-encoded cloud-init custom data"
   type        = string
   default     = null
 }
 variable "common_tags" {
-  type = optional(map(string))
+  type = object({
+    tse = "env"
+  })
 }
 variable "random_suffix" { 
-  type = optional(string)
+  type = string 
 }
